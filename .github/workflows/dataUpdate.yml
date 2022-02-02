@@ -2,7 +2,7 @@ name: Standings Data Update
 
 on:
   schedule:
-    - cron: '*/30 * * * mon,,tue,wed,thu,fri,sat,sun'
+    - cron: '*/30 * * *'
 
 jobs:
   build:
