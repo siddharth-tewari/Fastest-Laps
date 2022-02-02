@@ -1,8 +1,14 @@
-name: Standings Data Update
+name: Data Update
 
 on:
-  schedule:
-    - cron: '*/30 * * *'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Update table'
 
 jobs:
   build:
@@ -36,6 +42,7 @@ jobs:
                   python ./scripts/F1-Data.py
                   python ./scripts/F2-Data.py
                   python ./scripts/F3-Data.py
+                  python ./scripts/FE-Data.py
       - name: commit files
         run: |
           git config --local user.email "action@github.com"
