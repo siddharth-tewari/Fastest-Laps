@@ -31,7 +31,7 @@ jobs:
           retry_on: error
           command: |
                   python -m pip install --upgrade pip
-                  pip install -r ./scripts/py/requirements.txt
+                  pip install -r ./scripts/requirements.txt
       - name: execute F1 py script # run py scripts to get the latest data
         uses: nick-invision/retry@v2
         with:
@@ -39,7 +39,7 @@ jobs:
           max_attempts: 5
           retry_on: error
           command: |
-                  python ./scripts/py/F1-Data.py
+                  python ./scripts/F1-Data.py
       - name: execute F2 py script # run py scripts to get the latest data
         uses: nick-invision/retry@v2
         with:
@@ -47,7 +47,7 @@ jobs:
           max_attempts: 5
           retry_on: error
           command: |
-                  python ./scripts/py/F2-Data.py
+                  python ./scripts/F2-Data.py
       - name: execute F3 py script # run py scripts to get the latest data
         uses: nick-invision/retry@v2
         with:
@@ -55,7 +55,7 @@ jobs:
           max_attempts: 5
           retry_on: error
           command: |
-                  python ./scripts/py/F3-Data.py  
+                  python ./scripts/F3-Data.py  
       - name: execute FE py script # run py scripts to get the latest data
         uses: nick-invision/retry@v2
         with:
@@ -63,7 +63,7 @@ jobs:
           max_attempts: 5
           retry_on: error
           command: |
-                  python ./scripts/py/FE-Data.py 
+                  python ./scripts/FE-Data.py 
       - name: commit files
         run: |
           git config --local user.email "action@github.com"
