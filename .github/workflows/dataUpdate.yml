@@ -1,14 +1,8 @@
 name: Data Update
 
 on:
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'     
-        required: true
-        default: 'warning'
-      tags:
-        description: 'Update table'
+  schedule:
+    - cron: '*/30 * * * mon,sun'
 
 jobs:
   build:
@@ -20,7 +14,7 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9 #install the python needed
+          python-version: 3.8 #install the python needed
       - name: get directory structure
         run: tree
       - name: install python packages
@@ -31,7 +25,7 @@ jobs:
           retry_on: error
           command: |
                   python -m pip install --upgrade pip
-                  pip install -r ./scripts/requirements.txt
+                  pip install -r ./scripts/py/requirements.txt
       - name: execute F1 py script # run py scripts to get the latest data
         uses: nick-invision/retry@v2
         with:
@@ -39,10 +33,31 @@ jobs:
           max_attempts: 5
           retry_on: error
           command: |
-                  python ./scripts/F1-Data.py
-                  python ./scripts/F2-Data.py
-                  python ./scripts/F3-Data.py
-                  python ./scripts/FE-Data.py
+                  python ./scripts/py/F1-Data.py
+      - name: execute F2 py script # run py scripts to get the latest data
+        uses: nick-invision/retry@v2
+        with:
+          timeout_seconds: 60
+          max_attempts: 5
+          retry_on: error
+          command: |
+                  python ./scripts/py/F2-Data.py
+      - name: execute F3 py script # run py scripts to get the latest data
+        uses: nick-invision/retry@v2
+        with:
+          timeout_seconds: 60
+          max_attempts: 5
+          retry_on: error
+          command: |
+                  python ./scripts/py/F3-Data.py  
+      - name: execute FE py script # run py scripts to get the latest data
+        uses: nick-invision/retry@v2
+        with:
+          timeout_seconds: 60
+          max_attempts: 5
+          retry_on: error
+          command: |
+                  python ./scripts/py/FE-Data.py 
       - name: commit files
         run: |
           git config --local user.email "action@github.com"
