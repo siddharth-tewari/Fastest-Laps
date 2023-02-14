@@ -1,8 +1,14 @@
 name: Data Update
 
 on:
-  schedule:
-    - cron: '*/30 * * * mon,sun'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Update table'
 
 jobs:
   build:
